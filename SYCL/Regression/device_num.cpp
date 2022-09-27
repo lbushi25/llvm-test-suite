@@ -4,6 +4,7 @@
 // RUN: env SYCL_DEVICE_FILTER=1 env TEST_DEV_CONFIG_FILE_NAME=%t1.conf %t.out
 // RUN: env SYCL_DEVICE_FILTER=2 env TEST_DEV_CONFIG_FILE_NAME=%t1.conf %t.out
 // RUN: env SYCL_DEVICE_FILTER=3 env TEST_DEV_CONFIG_FILE_NAME=%t1.conf %t.out
+
 // Temporarily disable on L0 and HIP due to fails in CI
 // UNSUPPORTED: level_zero, hip
 
