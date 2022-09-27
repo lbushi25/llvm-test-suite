@@ -38,7 +38,7 @@ class ESIMDSelector : public device_selector {
   // Require GPU device
   virtual int operator()(const device &device) const {
     std::string name = device.get_info<info::device::name>();
-    if (name.find("ESIMD_EMULATOR") != std::string::npos) {
+    if (device.get_backend() == backend::ext_intel_esimd_emulator) {
       return 1000;
     } else {
       return 0;
