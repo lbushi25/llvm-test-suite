@@ -4,7 +4,6 @@
 // RUN: env SYCL_DEVICE_FILTER=1 env TEST_DEV_CONFIG_FILE_NAME=%t1.conf %t.out
 // RUN: env SYCL_DEVICE_FILTER=2 env TEST_DEV_CONFIG_FILE_NAME=%t1.conf %t.out
 // RUN: env SYCL_DEVICE_FILTER=3 env TEST_DEV_CONFIG_FILE_NAME=%t1.conf %t.out
-
 // Temporarily disable on L0 and HIP due to fails in CI
 // UNSUPPORTED: level_zero, hip
 
@@ -115,6 +114,8 @@ int GetPreferredDeviceIndex(const std::vector<device> &devices,
       {info::device_type::host, 100}};
   int score = -1;
   int index = -1;
+  int runnerup_index = -1;
+  int eligible_devices = 0;
   int devCount = devices.size();
   for (int i = 0; i < devCount; i++) {
     int dev_score = 0;
@@ -122,13 +123,20 @@ int GetPreferredDeviceIndex(const std::vector<device> &devices,
     auto backend = devices[i].get_backend();
     if ((type != info::device_type::all) && (deviceType != type))
       continue;
+    ++eligible_devices;
     dev_score = scoreByType.at(deviceType);
     if (backend == backend::ext_oneapi_level_zero)
       dev_score += 100;
     if (dev_score > score) {
       score = dev_score;
+      runnerup_index = index;
       index = i;
     }
+  }
+  if (index >= 0 && devices[index].get_backend() == backend::ext_intel_esimd_emulator && eligible_devices > 1) {
+    // if we chose ESIMD_EMULATOR, then must only return it if there are no other suitable devices in the system.
+    // Otherwise, we return the runner up device.
+    return runnerup_index;
   }
   return index;
 }
