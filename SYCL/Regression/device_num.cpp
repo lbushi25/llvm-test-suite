@@ -134,9 +134,12 @@ int GetPreferredDeviceIndex(const std::vector<device> &devices,
       index = i;
     }
   }
-  if (index >= 0 && devices[index].get_backend() == backend::ext_intel_esimd_emulator && eligible_devices > 1) {
-    // if we chose ESIMD_EMULATOR, then must only return it if there are no other suitable devices in the system.
-    // Otherwise, we return the runner up device.
+  if (index >= 0 &&
+      devices[index].get_backend() == backend::ext_intel_esimd_emulator &&
+      eligible_devices > 1) {
+    // if we chose ESIMD_EMULATOR, then must only return it if there are no
+    // other suitable devices in the system. Otherwise, we return the runner up
+    // device.
     return runnerup_index;
   }
   return index;

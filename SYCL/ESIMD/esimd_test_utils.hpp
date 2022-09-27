@@ -40,8 +40,8 @@ class ESIMDSelector : public device_selector {
     std::string name = device.get_info<info::device::name>();
     if (name.find("ESIMD_EMULATOR") != std::string::npos) {
       return 1000;
-    } else { 
-        return 0; 
+    } else {
+      return 0;
     }
   }
 };
