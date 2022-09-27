@@ -37,17 +37,12 @@ namespace esimd_test {
 class ESIMDSelector : public device_selector {
   // Require GPU device
   virtual int operator()(const device &device) const {
-    if (const char *dev_filter = getenv("SYCL_DEVICE_FILTER")) {
-      std::string filter_string(dev_filter);
-      if (filter_string.find("gpu") != std::string::npos)
-        return device.is_gpu() ? 1000 : -1;
-      std::cerr
-          << "Supported 'SYCL_DEVICE_FILTER' env var values is 'gpu' and '"
-          << filter_string << "' does not contain such substrings.\n";
-      return -1;
+    std::string name = device.get_info<info::device::name>();
+    if (name.find("ESIMD_EMULATOR") != std::string::npos) {
+      return 1000;
+    } else { 
+        return 0; 
     }
-    // If "SYCL_DEVICE_FILTER" not defined, only allow gpu device
-    return device.is_gpu() ? 1000 : -1;
   }
 };
 
