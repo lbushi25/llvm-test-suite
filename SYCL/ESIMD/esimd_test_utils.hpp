@@ -37,7 +37,6 @@ namespace esimd_test {
 class ESIMDSelector : public device_selector {
   // Require GPU device
   virtual int operator()(const device &device) const {
-    std::string name = device.get_info<info::device::name>();
     if (device.get_backend() == backend::ext_intel_esimd_emulator) {
       return 1000;
     } else {
