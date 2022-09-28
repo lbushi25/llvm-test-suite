@@ -39,6 +39,9 @@ class ESIMDSelector : public device_selector {
   virtual int operator()(const device &device) const {
     if (device.get_backend() == backend::ext_intel_esimd_emulator) {
       return 1000;
+    } else if (device.is_gpu()) {
+      // ideally, here should be a check that device's vendor is Intel
+      return 1000;
     } else {
       return 0;
     }
