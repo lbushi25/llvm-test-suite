@@ -39,13 +39,12 @@ class ESIMDSelector : public device_selector {
   virtual int operator()(const device &device) const {
     if (device.get_backend() == backend::ext_intel_esimd_emulator) {
       return 1000;
-    } 
-    else if (device.is_gpu()) {
-      // pick gpu device if esimd not available but give it a lower score in order not to compete with the esimd
-      // in environments where both are present
+    } else if (device.is_gpu()) {
+      // pick gpu device if esimd not available but give it a lower score in
+      // order not to compete with the esimd in environments where both are
+      // present
       return 900;
-    }
-    else {
+    } else {
       return 0;
     }
   }
