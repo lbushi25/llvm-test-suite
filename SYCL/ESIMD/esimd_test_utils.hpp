@@ -26,7 +26,7 @@ using namespace sycl;
 
 namespace esimd_test {
 
-// This is the class provided to SYCL runtime by the application to decide
+// This is function provided to SYCL runtime by the application to decide
 // on which device to run, or whether to run at all.
 // When selecting a device, SYCL runtime first takes (1) a selector provided by
 // the program or a default one and (2) the set of all available devices. Then
@@ -47,7 +47,7 @@ class ESIMDSelector : public device_selector {
     } else {
       return 0;
     }
-  }
+}
 };
 
 inline auto createExceptionHandler() {
