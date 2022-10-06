@@ -47,7 +47,7 @@ class ESIMDSelector : public device_selector {
     } else {
       return 0;
     }
-}
+  }
 };
 
 inline auto createExceptionHandler() {
