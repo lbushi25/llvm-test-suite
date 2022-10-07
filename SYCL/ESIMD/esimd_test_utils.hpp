@@ -35,7 +35,7 @@ namespace esimd_test {
 // was returned for all devices, then the selection process will cause an
 // exception.
 // Require GPU device
-int ESIMDSelector(const device &device) {
+inline int ESIMDSelector(const device &device) {
   if (device.get_backend() == backend::ext_intel_esimd_emulator) {
     return 1000;
   } else if (device.is_gpu()) {
