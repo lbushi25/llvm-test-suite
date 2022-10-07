@@ -26,7 +26,7 @@ using namespace sycl;
 
 namespace esimd_test {
 
-// This is the class provided to SYCL runtime by the application to decide
+// This is the function provided to SYCL runtime by the application to decide
 // on which device to run, or whether to run at all.
 // When selecting a device, SYCL runtime first takes (1) a selector provided by
 // the program or a default one and (2) the set of all available devices. Then
@@ -34,21 +34,19 @@ namespace esimd_test {
 // which '()' returned the highest number, is selected. If a negative number
 // was returned for all devices, then the selection process will cause an
 // exception.
-class ESIMDSelector : public device_selector {
   // Require GPU device
-  virtual int operator()(const device &device) const {
-    if (device.get_backend() == backend::ext_intel_esimd_emulator) {
-      return 1000;
-    } else if (device.is_gpu()) {
-      // pick gpu device if esimd not available but give it a lower score in
-      // order not to compete with the esimd in environments where both are
-      // present
-      return 900;
-    } else {
-      return 0;
-    }
+int ESIMDSelector(const device &device)  {
+  if (device.get_backend() == backend::ext_intel_esimd_emulator) {
+    return 1000;
+  } else if (device.is_gpu()) {
+    // pick gpu device if esimd not available but give it a lower score in
+    // order not to compete with the esimd in environments where both are
+    // present
+    return 900;
+  } else {
+    return 0;
   }
-};
+}
 
 inline auto createExceptionHandler() {
   return [](exception_list l) {
