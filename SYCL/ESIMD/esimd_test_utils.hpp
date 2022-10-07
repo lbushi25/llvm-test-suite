@@ -34,8 +34,8 @@ namespace esimd_test {
 // which '()' returned the highest number, is selected. If a negative number
 // was returned for all devices, then the selection process will cause an
 // exception.
-  // Require GPU device
-int ESIMDSelector(const device &device)  {
+// Require GPU device
+int ESIMDSelector(const device &device) {
   if (device.get_backend() == backend::ext_intel_esimd_emulator) {
     return 1000;
   } else if (device.is_gpu()) {
