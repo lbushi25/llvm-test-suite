@@ -4,8 +4,8 @@
 // RUN: FileCheck --input-file=%t_trace_no_filter.txt --check-prefix=CHECK-NO-FILTER %s
 // RUN: env SYCL_PI_TRACE=-1 SYCL_DEVICE_FILTER=esimd_emulator %t.out &> %t_trace_esimd_filter.txt || true
 // RUN: FileCheck --input-file=%t_trace_esimd_filter.txt --check-prefix=CHECK-ESIMD-FILTER %s
-
 // Checks pi traces on library loading
+
 #include <sycl/sycl.hpp>
 
 using namespace sycl;
