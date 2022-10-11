@@ -44,7 +44,7 @@ inline int ESIMDSelector(const device &device) {
     // present
     return 900;
   } else {
-    return 0;
+    return -1;
   }
 }
 
